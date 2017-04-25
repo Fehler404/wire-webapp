@@ -268,7 +268,7 @@ describe 'z.calling.v2.CallCenter', ->
       .then (call_et) =>
         expect(call_et).toBeDefined()
         expect(call_et.creator().name()).toBe user_ets.homer.name()
-        expect(call_et.state()).toBe z.calling.enum.CallState.OUTGOING
+        expect(call_et.state()).toBe z.calling.enum.CALL_STATE.OUTGOING
         expect(call_et.get_number_of_participants()).toBe 1
         done()
       .catch done.fail
@@ -287,7 +287,7 @@ describe 'z.calling.v2.CallCenter', ->
         expect(call_et.self_user_joined()).toBeTruthy()
         expect(call_et.self_client_joined()).toBeFalsy()
 
-        expect(call_et.state()).toBe z.calling.enum.CallState.ONGOING
+        expect(call_et.state()).toBe z.calling.enum.CALL_STATE.ONGOING
         expect(call_et.get_number_of_participants()).toEqual 1
         done()
       .catch done.fail
@@ -302,7 +302,7 @@ describe 'z.calling.v2.CallCenter', ->
         expect(call_et.self_user_joined()).toBeTruthy()
         expect(call_et.self_client_joined()).toBeFalsy()
 
-        expect(call_et.state()).toBe z.calling.enum.CallState.ONGOING
+        expect(call_et.state()).toBe z.calling.enum.CALL_STATE.ONGOING
         expect(call_et.get_number_of_participants()).toBe 0 # Marge hasn't accepted yet
         done()
       .catch done.fail
@@ -324,7 +324,7 @@ describe 'z.calling.v2.CallCenter', ->
         expect(call_et.self_user_joined()).toBeTruthy()
         expect(call_et.self_client_joined()).toBeFalsy()
 
-        expect(call_et.state()).toBe z.calling.enum.CallState.ONGOING
+        expect(call_et.state()).toBe z.calling.enum.CALL_STATE.ONGOING
         expect(call_et.get_number_of_participants()).toEqual 3
         done()
       .catch done.fail
@@ -347,7 +347,7 @@ describe 'z.calling.v2.CallCenter', ->
         expect(call_et.self_user_joined()).toBeTruthy()
         expect(call_et.self_client_joined()).toBeFalsy()
 
-        expect(call_et.state()).toBe z.calling.enum.CallState.ONGOING
+        expect(call_et.state()).toBe z.calling.enum.CALL_STATE.ONGOING
         expect(call_et.get_number_of_participants()).toEqual 3
         done()
       .catch done.fail
