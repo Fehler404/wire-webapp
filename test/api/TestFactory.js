@@ -359,7 +359,7 @@ window.TestFactory.prototype.exposeCallingActors = function() {
     window.calling_service = new z.calling.CallingService(self.client);
     window.calling_service.logger.level = self.settings.logging_level;
 
-    window.calling_repository = new z.calling.CallingRepository(window.call_service, window.calling_service, window.conversation_repository, window.media_repository, window.user_repository);
+    window.calling_repository = new z.calling.CallingRepository(window.call_service, window.calling_service, window.client_repository, window.conversation_repository, window.media_repository, window.user_repository);
     window.calling_repository.logger.level = self.settings.logging_level;
 
     window.v2_call_center = window.calling_repository.v2_call_center;

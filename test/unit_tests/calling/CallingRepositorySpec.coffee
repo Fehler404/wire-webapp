@@ -26,7 +26,7 @@ describe 'z.calling.CallingRepository', ->
     .then done
     .catch done.fail
 
-  describe 'outgoing_protocol_version', ->
+  describe 'set_protocol_version', ->
     conversation_id = z.util.create_random_uuid()
     group_conversation_id = z.util.create_random_uuid()
 
@@ -43,99 +43,30 @@ describe 'z.calling.CallingRepository', ->
 
     it 'should return the expected protocol version if backend switch is not set', (done) ->
       calling_repository.use_v3_api = undefined
-      calling_repository.outgoing_protocol_version conversation_id
+      calling_repository.set_protocol_version conversation_id
       .then (protocol_version) ->
         expect(protocol_version).toBe z.calling.enum.PROTOCOL.VERSION_3
 
-        calling_repository.outgoing_protocol_version group_conversation_id
+        calling_repository.set_protocol_version group_conversation_id
       .then (protocol_version) ->
         expect(protocol_version).toBe z.calling.enum.PROTOCOL.VERSION_2
 
         calling_repository.use_v3_api = true
-        calling_repository.outgoing_protocol_version conversation_id
+        calling_repository.set_protocol_version conversation_id
       .then (protocol_version) ->
         expect(protocol_version).toBe z.calling.enum.PROTOCOL.VERSION_3
 
-        calling_repository.outgoing_protocol_version group_conversation_id
+        calling_repository.set_protocol_version group_conversation_id
       .then (protocol_version) ->
-        expect(protocol_version).toBe z.calling.enum.PROTOCOL.VERSION_2
+        expect(protocol_version).toBe z.calling.enum.PROTOCOL.VERSION_3
 
         calling_repository.use_v3_api = false
-        calling_repository.outgoing_protocol_version conversation_id
+        calling_repository.set_protocol_version conversation_id
       .then (protocol_version) ->
         expect(protocol_version).toBe z.calling.enum.PROTOCOL.VERSION_3
 
-        calling_repository.outgoing_protocol_version group_conversation_id
+        calling_repository.set_protocol_version group_conversation_id
       .then (protocol_version) ->
         expect(protocol_version).toBe z.calling.enum.PROTOCOL.VERSION_2
         done()
       .catch done.fail
-
-    it 'should return the expected protocol version if backend switch is set to v2', (done) ->
-      calling_repository.calling_config
-        features:
-          protocol_version_1to1: z.calling.enum.PROTOCOL.VERSION_2
-          protocol_version_group: z.calling.enum.PROTOCOL.VERSION_2
-
-      calling_repository.use_v3_api = undefined
-      calling_repository.outgoing_protocol_version conversation_id
-      .then (protocol_version) ->
-        expect(protocol_version).toBe z.calling.enum.PROTOCOL.VERSION_3
-
-        calling_repository.outgoing_protocol_version group_conversation_id
-      .then (protocol_version) ->
-        expect(protocol_version).toBe z.calling.enum.PROTOCOL.VERSION_2
-
-        calling_repository.use_v3_api = true
-        calling_repository.outgoing_protocol_version conversation_id
-      .then (protocol_version) ->
-        expect(protocol_version).toBe z.calling.enum.PROTOCOL.VERSION_3
-
-        calling_repository.outgoing_protocol_version group_conversation_id
-      .then (protocol_version) ->
-        expect(protocol_version).toBe z.calling.enum.PROTOCOL.VERSION_2
-
-        calling_repository.use_v3_api = false
-        calling_repository.outgoing_protocol_version conversation_id
-      .then (protocol_version) ->
-        expect(protocol_version).toBe z.calling.enum.PROTOCOL.VERSION_3
-
-        calling_repository.outgoing_protocol_version group_conversation_id
-      .then (protocol_version) ->
-        expect(protocol_version).toBe z.calling.enum.PROTOCOL.VERSION_2
-        done()
-      .catch done.fail
-
-    it 'should return the expected protocol version if backend switch is set to v3', (done) ->
-      calling_repository.calling_config
-        features:
-          protocol_version_1to1: z.calling.enum.PROTOCOL.VERSION_3
-          protocol_version_group: z.calling.enum.PROTOCOL.VERSION_3
-
-      calling_repository.use_v3_api = undefined
-      calling_repository.outgoing_protocol_version conversation_id
-      .then (protocol_version) ->
-        expect(protocol_version).toBe z.calling.enum.PROTOCOL.VERSION_3
-
-        calling_repository.outgoing_protocol_version group_conversation_id
-      .then (protocol_version) ->
-        expect(protocol_version).toBe z.calling.enum.PROTOCOL.VERSION_2
-
-        calling_repository.use_v3_api = true
-        calling_repository.outgoing_protocol_version conversation_id
-      .then (protocol_version) ->
-        expect(protocol_version).toBe z.calling.enum.PROTOCOL.VERSION_3
-
-        calling_repository.outgoing_protocol_version group_conversation_id
-      .then (protocol_version) ->
-        expect(protocol_version).toBe z.calling.enum.PROTOCOL.VERSION_2
-
-        calling_repository.use_v3_api = false
-        calling_repository.outgoing_protocol_version conversation_id
-      .then (protocol_version) ->
-        expect(protocol_version).toBe z.calling.enum.PROTOCOL.VERSION_3
-
-        calling_repository.outgoing_protocol_version group_conversation_id
-      .then (protocol_version) ->
-        expect(protocol_version).toBe z.calling.enum.PROTOCOL.VERSION_2
-        done()
